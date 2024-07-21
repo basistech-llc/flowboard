@@ -20,13 +20,13 @@ const AddContactPage = () => {
       title: "Create Person",
       height: 700,
       airtableUrl:
-        "https://airtable.com/embed/appuwUqhc3geVVy1v/pagrtsVzEDZTVKptv/form",
+        "https://airtable.com/embed/appJpgQlIEsFOx98S/pagGmOlDaebkOm0AS/form",
     },
     createCompany: {
       title: "Create Company",
       height: 700,
       airtableUrl:
-        "https://airtable.com/embed/appuwUqhc3geVVy1v/pag33WEtSwkKTefN6/form",
+        "https://airtable.com/embed/appJpgQlIEsFOx98S/pagiWi4xo7wbMQQUt/form",
     },
   };
 
