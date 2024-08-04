@@ -1,39 +1,28 @@
-# Airtable front-end interface
-
-So far, this is just a skeleton of a toy.
+# Flowboard - BasisTech CRM
 
 
 # Startup
 
-*Development*
 
-```
-yarn dev
-```
+## Dev mode
 
-*Deployment*
-
-```
-yarn build && yarn deploy
-```
+`make rebuild`
 
 
-# Credentials
+## Production
 
-To obtain your Airtable API token, follow these steps:
+TBD
 
-1. Log in to Airtable:
-  * Go to Airtable and log in with your credentials.
+_(before we had wrapped this in Docker, it was `yarn build && yarn deploy` which put the
+front-end up as a static app on GitHub gh_pages)_
 
-2 Navigate to the Developer Hub:
-  * Click on your profile picture or initials in the top-right corner of the Airtable interface.
-  * Select "Developer hub" from the dropdown menu.
 
-3. Generate a Personal Access Token:
-  * In the Developer Hub, find the section for Personal Access Tokens.
-  * Click on "Generate token" or a similar button.
-  * Follow the prompts to create a new Personal Access Token, specifying the scopes and bases you want to grant access to.
-  * Copy the generated token. This is your Personal Access Token.
+# Usage
+
+This is a wrapper around our Airtable account.
+
+Authentication is still primitive. Follow the instructions in the Flowboard Dashboard
+GUI. Basically, you need to obtain your Personal Access Token from Airtable.
 
 
 # About

@@ -1,0 +1,51 @@
+services:
+  fb_backend:
+    build: ./fb_backend
+    container_name: fb_backend
+    tty: true
+    env_file:
+     - .env
+     - .env.secrets
+    ports:
+      - "${FB_BACKEND_PORT}:${FB_BACKEND_PORT}"
+    volumes:
+      - ./fb_backend:/fb_backend
+      - venv:/fb_backend/.venv
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
+      - FLASK_RUN_HOST=0.0.0.0
+
+  fb_dashboard:
+    build: ./fb_dashboard
+    container_name: fb_dashboard
+    ports: ["${FB_DASHBOARD_PORT}:5173"]
+    environment:
+      - VITE_PORT=${FB_DASHBOARD_PORT}
+    volumes:
+      - ./fb_dashboard:/app
+    depends_on:
+      - fb_backend
+
+  fb_nginx:
+    image: nginx:alpine
+    container_name: fb_nginx
+    ports:
+      - "${FB_NGINX_PORT}:${FB_NGINX_PORT}"
+    volumes:
+      - ./nginx.template.conf:/etc/nginx/nginx.template.conf:ro
+      - ./nginx_logs:/var/log/nginx
+    environment:
+      - FB_NGINX_PORT=${FB_NGINX_PORT}
+      - FB_DASHBOARD_PORT=${FB_DASHBOARD_PORT}
+      - FB_BACKEND_PORT=${FB_BACKEND_PORT}
+    entrypoint:
+      - /bin/sh
+      - -c
+      - "envsubst '$$FB_NGINX_PORT $$FB_DASHBOARD_PORT $$FB_BACKEND_PORT' < /etc/nginx/nginx.template.conf > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+    depends_on:
+      - fb_backend
+      - fb_dashboard
+
+volumes:
+  venv:

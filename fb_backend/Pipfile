@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+# Use real library version
+degel-python-utils = "==0.1.12"
+# For debugging development, use local src
+# degel-python-utils = {path = "../../degel/degel-python-utils"}
+python-multipart = "0.0.9"
+
+[dev-packages]
+black = "==24.8.0"
+flake8 = "==7.1.1"
+pre-commit = "==3.8.0"
+pylint = "==3.2.6"
+pylint-pydantic = "==0.3.2"
+pytest = "==8.3.2"
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.1"
