@@ -1,10 +1,9 @@
 import { Layout, Menu } from "antd";
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Routes,
   Link,
-  Navigate,
   useLocation,
 } from "react-router-dom";
 
