@@ -9,7 +9,17 @@ import { useAirtableContext } from "../context/AirtableContext";
 const { Title } = Typography;
 
 const AddContactPage = () => {
-  const { people, companies, error } = useFetchAirtableData();
+  const { getTable } = useAirtableContext();
+  const [error, setError] = useState(null);
+  const [people, setPeople] = useState([]);
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      setPeople(await getTable({ tableName: "People", setError }));
+      setCompanies(await getTable({ tableName: "Companies", setError }));
+    })();
+  });
 
   const [openModal, setOpenModal] = useState(null);
   const onOk = () => setOpenModal(null);
@@ -94,24 +104,6 @@ const AddContactPage = () => {
       {error && <p>Error: {error.message}</p>}
     </div>
   );
-};
-
-const useFetchAirtableData = () => {
-  const { getTable } = useAirtableContext();
-  const [people, setPeople] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async (tableName, setter) => {
-      setter(await getTable({ tableName, setError }));
-    };
-
-    fetchData("People", setPeople);
-    fetchData("Companies", setCompanies);
-  }, [getTable]);
-
-  return { people, companies, error };
 };
 
 export default AddContactPage;

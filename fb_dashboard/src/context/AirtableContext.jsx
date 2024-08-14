@@ -60,9 +60,11 @@ export const AirtableProvider = ({ children }) => {
         return fetchPromises[tableName];
       } catch (err) {
         setError(err.message);
+        return null;
       }
     } else {
       setError("Missing Airtable access token");
+      return null;
     }
   };
 
