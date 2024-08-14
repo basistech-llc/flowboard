@@ -72,6 +72,10 @@ shell: .container-check
 	docker compose exec ${DASHBOARD_SERVICE} sh
 .PHONY: shell
 
+# Linting
+lint: .container-check
+	cd ${DASHBOARD_DIR} && yarn lint
+
 # Run tests
 test: .container-check
 	docker compose exec ${DASHBOARD_SERVICE} npm run test

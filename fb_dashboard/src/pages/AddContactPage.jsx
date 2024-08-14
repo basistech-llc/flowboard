@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Button, Divider, Modal, Row, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { Divider, Typography } from "antd";
 
-import writeAirtableRecord from "../airtable/writeAirtableRecord";
 import AirtablePopup from "../components/AirtablePopup";
 import FindRecordForm from "../components/FindRecordForm";
 import { useAirtableContext } from "../context/AirtableContext";
@@ -9,7 +8,7 @@ import { useAirtableContext } from "../context/AirtableContext";
 const { Title } = Typography;
 
 const AddContactPage = () => {
-  const { airtableToken, baseId, getTable } = useAirtableContext();
+  const { getTable } = useAirtableContext();
   const [error, setError] = useState(null);
   const [people, setPeople] = useState([]);
   const [companies, setCompanies] = useState([]);
