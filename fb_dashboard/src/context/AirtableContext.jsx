@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import fetchAirtableData from "../airtable/fetchAirtableData";
+import readAirtableTable from "../airtable/readAirtableTable";
 import { obfuscate, deobfuscate } from "../utils/trivialObfuscation";
 
 const AirtableContext = createContext();
@@ -41,7 +41,7 @@ export const AirtableProvider = ({ children }) => {
 
     if (airtableToken) {
       try {
-        fetchPromises[tableName] = fetchAirtableData(
+        fetchPromises[tableName] = readAirtableTable(
           airtableToken,
           baseId,
           tableName,

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Button, Divider, Modal, Row, Typography } from "antd";
 
+import writeAirtableRecord from "../airtable/writeAirtableRecord";
 import AirtablePopup from "../components/AirtablePopup";
 import FindRecordForm from "../components/FindRecordForm";
-import { onSearch } from "../utils/onSearch";
 import { useAirtableContext } from "../context/AirtableContext";
 
 const { Title } = Typography;
 
 const AddContactPage = () => {
-  const { getTable } = useAirtableContext();
+  const { airtableToken, baseId, getTable } = useAirtableContext();
   const [error, setError] = useState(null);
   const [people, setPeople] = useState([]);
   const [companies, setCompanies] = useState([]);
@@ -40,23 +40,13 @@ const AddContactPage = () => {
     },
   };
 
-  const personFieldMap = {
-    firstName: "First Name",
-    lastName: "Last Name",
-    email: "Email",
-  };
-
-  const companyFieldMap = {
-    company: "Name",
-  };
-
   const personFormFields = [
-    { name: "firstName", label: "First Name" },
-    { name: "lastName", label: "Last Name" },
-    { name: "email", label: "Email" },
+    { name: "First Name", label: "First Name" },
+    { name: "Last Name", label: "Last Name" },
+    { name: "Email", label: "Email" },
   ];
 
-  const companyFormFields = [{ name: "company", label: "Company" }];
+  const companyFormFields = [{ name: "Name", label: "Company" }];
 
   return (
     <div style={{ padding: "24px" }}>
@@ -74,33 +64,19 @@ const AddContactPage = () => {
       <Divider />
       <Title level={3}>Find Person</Title>
       <FindRecordForm
+        tableName="People"
         formFields={personFormFields}
         records={people}
-        onSearch={onSearch}
-        fieldMap={personFieldMap}
         formName="find_person"
       />
       <Divider />
-      <Row gutter={16}>
-        <Button type="default" onClick={() => setOpenModal("createPerson")}>
-          {"Create New Person"}
-        </Button>
-      </Row>
-      <Divider />
       <Title level={3}>Find Company</Title>
       <FindRecordForm
+        tableName="Companies"
         formFields={companyFormFields}
         records={companies}
-        onSearch={onSearch}
-        fieldMap={companyFieldMap}
         formName="find_company"
       />
-      <Divider />
-      <Row gutter={16}>
-        <Button type="default" onClick={() => setOpenModal("createCompany")}>
-          {"Create New Company"}
-        </Button>
-      </Row>
       {error && <p>Error: {error.message}</p>}
     </div>
   );

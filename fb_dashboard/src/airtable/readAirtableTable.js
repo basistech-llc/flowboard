@@ -1,4 +1,4 @@
-const fetchAirtableData = async (airtableToken, baseId, tableName) => {
+const readAirtableTable = async (airtableToken, baseId, tableName) => {
   const records = [];
   let offset = null;
 
@@ -26,4 +26,4 @@ const fetchAirtableData = async (airtableToken, baseId, tableName) => {
   return records;
 };
 
-export default fetchAirtableData;
+export default readAirtableTable;
