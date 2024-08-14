@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Divider, Modal, Row, Typography } from "antd";
 
+import AirtablePopup from "../components/AirtablePopup";
 import FindRecordForm from "../components/FindRecordForm";
 import { onSearch } from "../utils/onSearch";
 import { useAirtableContext } from "../context/AirtableContext";
@@ -10,10 +11,9 @@ const { Title } = Typography;
 const AddContactPage = () => {
   const { people, companies, error } = useFetchAirtableData();
 
-  const [modalVisible, setModalVisible] = useState(null);
-  const showModal = (modal) => setModalVisible(modal);
-  const onOk = () => setModalVisible(null);
-  const onCancel = () => setModalVisible(null);
+  const [openModal, setOpenModal] = useState(null);
+  const onOk = () => setOpenModal(null);
+  const onCancel = () => setOpenModal(null);
 
   const modalSpecs = {
     createPerson: {
@@ -50,24 +50,15 @@ const AddContactPage = () => {
 
   return (
     <div style={{ padding: "24px" }}>
-      {modalVisible && (
-        <Modal
-          title={modalSpecs[modalVisible].title}
-          open={modalVisible}
+      {openModal && (
+        <AirtablePopup
+          title={modalSpecs[openModal].title}
+          airtableFormUrl={modalSpecs[openModal].airtableUrl}
+          isOpen={!!openModal}
           onOk={onOk}
           onCancel={onCancel}
-          footer={null}
-          // width="80%" // Adjust the width as needed
-          // style={{ top: 20 }} // Adjust the top position as needed
-        >
-          <iframe
-            className="airtable-embed"
-            src={modalSpecs[modalVisible].airtableUrl}
-            width="100%"
-            height={modalSpecs[modalVisible].height}
-            style={{ background: "transparent", border: "1px solid #ccc" }}
-          ></iframe>
-        </Modal>
+          height={modalSpecs[openModal].height}
+        />
       )}
       <Title level={2}>Add Contact</Title>
       <Divider />
@@ -81,7 +72,7 @@ const AddContactPage = () => {
       />
       <Divider />
       <Row gutter={16}>
-        <Button type="default" onClick={() => setModalVisible("createPerson")}>
+        <Button type="default" onClick={() => setOpenModal("createPerson")}>
           {"Create New Person"}
         </Button>
       </Row>
@@ -96,7 +87,7 @@ const AddContactPage = () => {
       />
       <Divider />
       <Row gutter={16}>
-        <Button type="default" onClick={() => setModalVisible("createCompany")}>
+        <Button type="default" onClick={() => setOpenModal("createCompany")}>
           {"Create New Company"}
         </Button>
       </Row>
