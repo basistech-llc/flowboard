@@ -19,9 +19,10 @@ services:
   fb_dashboard:
     build: ./fb_dashboard
     container_name: fb_dashboard
-    ports: ["${FB_DASHBOARD_PORT}:5173"]
+    ports:
+     - ${FB_DASHBOARD_PORT}:5173
     environment:
-      - VITE_PORT=${FB_DASHBOARD_PORT}
+      - VITE_PORT=5173
     volumes:
       - ./fb_dashboard:/app
     depends_on:
